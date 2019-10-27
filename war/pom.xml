@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>cnv-gestao-war</artifactId>
+
+	<packaging>war</packaging>
+	<name>CNV - Gestao - WAR</name>
+
+	<parent>
+		<groupId>br.com.sicoob.cnv</groupId>
+		<artifactId>gestao</artifactId>
+		<version>1.0.0.27-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<webapp-dir>web</webapp-dir>
+	</properties>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${versao.maven-war-plugin}</version>
+				<configuration>
+					<webResources>
+						<resource>
+							<directory>${webapp-dir}</directory>
+							<filtering>true</filtering>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.sonatype.flexmojos</groupId>
+				<artifactId>flexmojos-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>flex-cnv</id>
+						<goals>
+							<goal>copy-flex-resources</goal>
+						</goals>
+						<phase>process-resources</phase>
+						<configuration>
+							<stripModuleArtifactInfo>true</stripModuleArtifactInfo>
+							<stripVersion>true</stripVersion>
+							<useFinalName>true</useFinalName>
+							<webappDirectory>${project.build.directory}/${project.build.finalName}/sisbr/Convenio/Gestao</webappDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- o arquivo atualizado será gerado dentro da pasta target, como solucao
+				paliativa o mesmo é movido para a pasta menus do projeto -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>${versao.exec-maven-plugin}</version>
+
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+
+				<configuration>
+					<includePluginDependencies>true</includePluginDependencies>
+					<executableDependency>
+						<groupId>br.com.sicoob.hash</groupId>
+						<artifactId>gerador-hash</artifactId>
+					</executableDependency>
+					<mainClass>br.com.sicoob.hash.HashGenerator</mainClass>
+					<arguments>
+						<argument>-appId</argument>
+						<argument>${project.build.finalName}</argument>
+						<argument>-baseDir</argument>
+						<argument>${project.build.directory}</argument>
+						<argument>-verbose</argument>
+						<argument>true</argument>
+					</arguments>
+				</configuration>
+
+				<dependencies>
+					<dependency>
+						<groupId>br.com.sicoob.hash</groupId>
+						<artifactId>gerador-hash</artifactId>
+						<version>1.0.2.0</version>
+						<type>jar</type>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.sonatype.flexmojos
+										</groupId>
+										<artifactId>
+											flexmojos-maven-plugin
+										</artifactId>
+										<versionRange>
+											[4.2-beta,)
+										</versionRange>
+										<goals>
+											<goal>
+												copy-flex-resources
+											</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+	</build>
+	<dependencies>
+
+		<dependency>
+			<groupId>br.com.sicoob.cnv</groupId>
+			<artifactId>cnv-gestao-ejb</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>net.sf.flexjson</groupId>
+					<artifactId>flexjson</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>br.com.sicoob.cnv</groupId>
+			<artifactId>cnv-gestao-relatorio</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>br.com.sicoob.framework</groupId>
+			<artifactId>sicoob-was9</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>br.com.sicoob.framework</groupId>
+			<artifactId>sicoob-java</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>com.ibm.ws.ejb</groupId>
+					<artifactId>thinclient</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>br.com.sicoob.framework</groupId>
+			<artifactId>sicoob-rest</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.jaxrs</groupId>
+			<artifactId>jackson-jaxrs-json-provider</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-databind</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.module</groupId>
+					<artifactId>
+						jackson-module-jaxb-annotations
+					</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+
+
+		<dependency>
+			<groupId>br.com.sicoob.cnv.framework</groupId>
+			<artifactId>cnv-framework-rest</artifactId>
+		</dependency>
+
+		<!-- FLEX -->
+		<dependency>
+			<groupId>br.com.sicoob.cnv</groupId>
+			<artifactId>cnv-gestao-flex</artifactId>
+			<version>${project.version}</version>
+			<classifier>gestaocontrato</classifier>
+			<type>swf</type>
+		</dependency>
+
+		<dependency>
+			<groupId>br.com.sicoob.cnv</groupId>
+			<artifactId>cnv-gestao-flex</artifactId>
+			<version>${project.version}</version>
+			<classifier>painelmonitoracao</classifier>
+			<type>swf</type>
+		</dependency>
+
+		<dependency>
+			<groupId>br.com.sicoob.cnv</groupId>
+			<artifactId>cnv-gestao-flex</artifactId>
+			<version>${project.version}</version>
+			<classifier>relatoriocontrato</classifier>
+			<type>swf</type>
+		</dependency>
+		
+	</dependencies>
+
+</project>

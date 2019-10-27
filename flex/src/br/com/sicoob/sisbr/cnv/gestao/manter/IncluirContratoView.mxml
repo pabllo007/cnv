@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<componentes:Modulo
+	xmlns:containers="br.com.bancoob.componentes.containers.*"
+	xmlns:titulo="br.com.bancoob.componentes.titulo.*"
+	xmlns:input="br.com.bancoob.componentes.input.*"
+	xmlns:componentes="br.com.bancoob.componentes.*"
+	xmlns:navegacao="br.com.bancoob.componentes.navegacao.*"
+	xmlns:selecaogeral="br.com.sicoob.sisbr.cnv.util.selecaogeral.*"
+	xmlns:campos="br.com.bancoob.componentes.campos.*" 
+	xmlns:grid="br.com.bancoob.componentes.grid.*"
+	xmlns:botao="br.com.bancoob.componentes.painellista.*"
+	xmlns:tabelaPaginada="br.com.bancoob.componentes.tabelapaginada.*"
+	xmlns:renderer="br.com.sicoob.sisbr.cnv.gestao.renderer.*"
+	xmlns:mx="http://www.adobe.com/2006/mxml" width="960" height="547.5" 
+	backgroundAlpha="0.0" backgroundColor="#FFFFFF" 
+	clipContent="false" horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
+	
+	<containers:VBoxBancoob y="10" x="10" width="100%" height="100%">
+		<containers:HBoxBancoob width="100%" >
+			<titulo:SubtituloView texto="Dados Cadastrais"  width="99%" />		
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" paddingLeft="20">
+			<componentes:Rotulo text="CNPJ:" textAlign="left" width="4.7%"/>
+			<input:InputCNPJ id="inputCNPJ" width="26.1%"/>
+		
+			<componentes:Rotulo text="Sigla:" textAlign="left" width="4%"/>
+			<input:Texto id="inputSigla" width="26.1%" maxChars="40" />
+			
+			<componentes:Rotulo text="N° Contrato/Doc:" textAlign="left" width="7%"/>
+			<input:Texto id="inputNumContrato" width="26.1%" maxChars="30"/>
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" paddingLeft="20">
+			<componentes:Rotulo text="Razão Social:" textAlign="left" />
+			<componentes:Rotulo id="inputRazao" width="89.7%"/>
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" paddingLeft="20">
+			<componentes:Rotulo text="Nome Fantasia:" textAlign="left" />
+			<componentes:Rotulo id="inputNome" width="88.5%"/>
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" >
+			<titulo:SubtituloView texto="Prazos Contratuais"  width="99%" />		
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" paddingLeft="20">
+			<componentes:Rotulo text="Assinatura do Contrato: " textAlign="left" width="5%"/>
+			<input:Data id="dataAssinaturaContrato" dataDefault="{null}" validarMensagem="Informe a data final" validarObrigatorio="false" width="9.7%"/>
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" paddingLeft="20" verticalAlign="middle">
+			<componentes:Rotulo text="Vigência: " textAlign="left" width="12.1%"/>
+			
+			<containers:VBoxBancoob id="campoDataVigencia" width="93" height="100%">
+				<input:Data id="dataVigencia" dataDefault="{null}" validarMensagem="Informe a data final" validarObrigatorio="false" width="99%"/>
+			</containers:VBoxBancoob>
+		
+			<input:Check id="checkIndeterminado" textAlign="right" width="3%"/>
+			<componentes:Rotulo text="Indeterminado" />
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" paddingLeft="20">
+			<componentes:Rotulo text="Renovação: " textAlign="left" width="12.1%"/>
+			<input:Data id="dataRenovacao" dataDefault="{null}" validarMensagem="Informe a data final" validarObrigatorio="false" width="10%"/>
+		
+			<componentes:Rotulo text="Alerta para Renovação:" textAlign="right" width="40%"/>
+			<input:Combo id="idComboRenovacao" editable="false" inserirItemOpcional="true" width="5%" labelField="descricao" labelItemOpcional="SELECIONE"/>
+			<componentes:Rotulo text="Dias" />
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" paddingLeft="20">
+			<componentes:Rotulo text="Atualização Tarifária: " textAlign="left" width="12.1%"/>
+			<input:Data id="dataAtualizacaoTarifaria" dataDefault="{null}" validarMensagem="Informe a data final" validarObrigatorio="false" width="10%"/>
+		
+			<componentes:Rotulo text="Alerta para Atualização:" textAlign="right" width="40.1%"/>
+			<input:Combo id="idComboAtualizacao" editable="false" inserirItemOpcional="true" width="5%" labelField="descricao" labelItemOpcional="SELECIONE"/>
+			<componentes:Rotulo text="Dias" />
+		</containers:HBoxBancoob>
+
+			<containers:HBoxBancoob width="100%" id="hdGrid">
+				<tabelaPaginada:TabelaPaginadaMemoria id="grdResultado" x="2" y="4" width="99%" height="245"
+													  exibirScrollHorizontal="true" tabIndex="5"
+													  tamanhoPagina="10" titulo="Vincular Convênio">
+					<tabelaPaginada:MetadadosTabela>
+						<grid:ColunaGrid id="colSelecao" headerText="" textAlign="center" sortable="false"
+												dataField="selecionado" width="40">
+							<grid:itemRenderer>
+								<mx:Component>
+									<renderer:GridCheckIncluirContratoLoteItemRenderer/>
+								</mx:Component>
+							</grid:itemRenderer>
+						</grid:ColunaGrid>
+						<grid:ColunaGrid width="70" dataField="numero" 
+										 headerText="Convênio" textAlign="left"/>
+						<grid:ColunaGrid width="170" dataField="sigla" 
+										 headerText="Sigla" textAlign="left"/>
+						<grid:ColunaGrid width="170" dataField="cnpjFormatado" 
+										 headerText="CNPJ" textAlign="left"/>
+						<grid:ColunaGrid width="170" dataField="segmento" 
+										 headerText="Segmento" textAlign="left"/>
+						<grid:ColunaGrid width="70" dataField="febraban" 
+										 headerText="Cod Febraban" textAlign="left"/>
+						<grid:ColunaGrid width="50" dataField="situacao" 
+										 headerText="Situação" textAlign="left"/>
+					</tabelaPaginada:MetadadosTabela>
+				</tabelaPaginada:TabelaPaginadaMemoria>
+			</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob id="idBotaoBuscar" width="100%" horizontalAlign="left" paddingRight="10" visible="false">
+			<componentes:Rotulo text="Outros Convênios:" textAlign="left"/>
+			<botao:BotaoProcurarView  id="btBuscar" label="" width="30"/>
+		</containers:HBoxBancoob>
+		
+	</containers:VBoxBancoob>
+
+	<containers:HBoxBancoob bottom="5" right="10">
+		<componentes:Botao id="btSalvar" label="Salvar"/>
+		<componentes:Botao id="btFechar" label="Fechar"  click="fecharJanela();"/>
+	</containers:HBoxBancoob>
+	
+</componentes:Modulo>

@@ -1,0 +1,205 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>cnv-gestao-flex</artifactId>
+	<name>CNV - Gestao - Flex</name>
+
+	<parent>
+		<groupId>br.com.sicoob.cnv</groupId>
+		<artifactId>gestao</artifactId>
+		<version>1.0.0.27-SNAPSHOT</version>
+	</parent>
+
+	<packaging>swf</packaging>
+
+	<build>
+		<sourceDirectory>${project.basedir}/src</sourceDirectory>
+		<testSourceDirectory>${project.basedir}/test</testSourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.sonatype.flexmojos</groupId>
+				<artifactId>flexmojos-maven-plugin</artifactId>
+				<inherited>true</inherited>
+				<extensions>true</extensions>
+				<configuration>
+					<sourceFile>TesteComum.mxml</sourceFile>
+					<modules>
+						<module>
+							<sourceFile>GestaoContrato.as</sourceFile>
+							<finalName>gestaocontrato</finalName>
+						</module>
+						<module>
+							<sourceFile>PainelMonitoracao.as</sourceFile>
+							<finalName>painelmonitoracao</finalName>
+						</module>
+						<module>
+							<sourceFile>RelatorioContrato.as</sourceFile>
+							<finalName>relatoriocontrato</finalName>
+						</module>
+					</modules>
+				</configuration>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.sonatype.flexmojos
+										</groupId>
+										<artifactId>
+											flexmojos-maven-plugin
+										</artifactId>
+										<versionRange>
+											[4.2-beta,)
+										</versionRange>
+										<goals>
+											<goal>test-compile</goal>
+											<goal>compile-swf</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+
+
+	<dependencies>
+
+		<!-- EXTERNAS -->
+		<dependency>
+			<groupId>br.com.sicoob.framework.flex</groupId>
+			<artifactId>prt-base-sicoob-flex</artifactId>
+			<version>${versao-prt-base-sicoob-flex}</version>
+			<type>swc</type>
+			<scope>external</scope>
+		</dependency>
+		<dependency>
+			<groupId>br.com.sicoob.framework.flex</groupId>
+			<artifactId>prt-base-componentes-flex</artifactId>
+			<version>${versao-prt-base-componentes-flex}</version>
+			<type>swc</type>
+			<scope>external</scope>
+		</dependency>
+		<dependency>
+			<groupId>br.com.sicoob.framework.flex</groupId>
+			<artifactId>prt-base-constantes-flex</artifactId>
+			<version>${versao-prt-base-constantes-flex}</version>
+			<type>swc</type>
+			<scope>external</scope>
+		</dependency>
+		<dependency>
+			<groupId>br.com.sicoob.framework.flex</groupId>
+			<artifactId>prt-base-sisbr-assets-flex</artifactId>
+			<version>${versao-prt-base-sisbr-assets-flex}</version>
+			<type>swc</type>
+			<scope>external</scope>
+		</dependency>
+		<dependency>
+			<groupId>br.com.sicoob.framework.flex</groupId>
+			<artifactId>prt-base-sisbr-flex</artifactId>
+			<version>${versao-prt-base-sisbr-flex}</version>
+			<type>swc</type>
+			<scope>external</scope>
+		</dependency>
+		
+		
+		<dependency>
+			<groupId>br.com.sicoob.framework.portal</groupId>
+			<artifactId>prt-base-sisbr-java</artifactId>
+			<version>1.0.8.34</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>br.com.sicoob.framework.relatorio</groupId>
+			<artifactId>relatorio-flex</artifactId>
+			<version>${relatorio-flex.version}</version>
+			<type>swc</type>
+			<scope>external</scope>
+		</dependency>
+		<dependency>
+			<groupId>br.com.sicoob.framework.flex</groupId>
+			<artifactId>prt-base-sisbr-flex-air</artifactId>
+			<version>${versao-prt-base-sisbr-flex-air}</version>
+			<type>swc</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>br.com.sicoob.sisbr.cnvrenovacao</groupId>
+			<artifactId>cnv-selecao-geral-flex</artifactId>
+			<version>${cnv-utilitarios.version}</version>
+			<type>swc</type>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>br.com.sicoob.sisbr.cnvrenovacao</groupId>
+			<artifactId>cnv-utilitarios-lib-flex</artifactId>
+			<version>${cnv-utilitarios.version}</version>
+			<type>swc</type>
+			<scope>compile</scope>
+		</dependency>
+
+
+		<!-- EXTERNAS -->
+		<dependency>
+			<groupId>com.adobe.flex.framework</groupId>
+			<artifactId>flex-framework</artifactId>
+			<version>${versao-flex-framework}</version>
+			<type>pom</type>
+			<exclusions>
+				<exclusion>
+					<groupId>com.adobe.flex.framework</groupId>
+					<artifactId>playerglobal</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.adobe.flex.framework</groupId>
+			<artifactId>playerglobal</artifactId>
+			<version>${versao-playerglobal}</version>
+			<classifier>10</classifier>
+			<type>swc</type>
+		</dependency>
+		<dependency>
+			<groupId>com.adobe.flex.framework</groupId>
+			<artifactId>datavisualization</artifactId>
+			<version>${versao-datavisualization}</version>
+			<type>swc</type>
+		</dependency>
+		<dependency>
+			<groupId>com.adobe.flex.framework</groupId>
+			<artifactId>datavisualization</artifactId>
+			<version>${versao-datavisualization}</version>
+			<type>rb.swc</type>
+		</dependency>
+		<dependency>
+			<groupId>org.graniteds</groupId>
+			<artifactId>granite-swc</artifactId>
+			<version>${versao-granite-swc}</version>
+			<type>swc</type>
+		</dependency>
+		<dependency>
+			<groupId>org.graniteds</groupId>
+			<artifactId>granite-hibernate-swc</artifactId>
+			<version>${versao-granite-hibernate-swc}</version>
+			<type>swc</type>
+		</dependency>
+	</dependencies>
+</project>

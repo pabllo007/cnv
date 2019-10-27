@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<destinos>
+		<destinoArquivosGestaoConvenios
+					local-url="http://localhost:9080/cnvgestao/sisbr/"
+	          cooperativa-url="http://localhost:9080/cnvgestao/sisbr/"
+				  bancoob-url="http://localhost:9080/cnvgestao/sisbr/"
+	             internet-url="http://localhost:9080/cnvgestao/sisbr/"
+	             intranet-url="http://localhost:9080/cnvgestao/sisbr/"
+	                  cps-url="http://localhost:9080/cnvgestao/sisbr/"
+	                 vpn1-url="http://localhost:9080/cnvgestao/sisbr/"
+		/>
+	</destinos>
+</config>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<componentes:Modulo
+	xmlns:containers="br.com.bancoob.componentes.containers.*"
+	xmlns:titulo="br.com.bancoob.componentes.titulo.*"
+	xmlns:input="br.com.bancoob.componentes.input.*"
+	xmlns:componentes="br.com.bancoob.componentes.*"
+	xmlns:navegacao="br.com.bancoob.componentes.navegacao.*"
+	xmlns:selecaogeral="br.com.sicoob.sisbr.cnv.util.selecaogeral.*"
+	xmlns:campos="br.com.bancoob.componentes.campos.*" 
+	xmlns:grid="br.com.bancoob.componentes.grid.*"
+	xmlns:tabelaPaginada="br.com.bancoob.componentes.tabelapaginada.*"
+	xmlns:mx="http://www.adobe.com/2006/mxml" width="960" height="370" 
+	backgroundAlpha="0.0" backgroundColor="#FFFFFF"
+	clipContent="false" horizontalScrollPolicy="auto" verticalScrollPolicy="auto" >
+	<mx:Script>
+		<![CDATA[
+			[Bindable]
+			[Embed(source="br/com/bancoob/imagens/icos/skip forward.png")]
+			public var Mostrar:Class;
+			
+			[Bindable]
+			[Embed(source="br/com/bancoob/imagens/icos/fast forward.png")]
+			public var Recolher:Class;
+		]]>
+	</mx:Script>
+	<containers:VBoxBancoob y="10" x="10" width="100%" height="100%">
+		
+		<containers:HBoxBancoob width="100%" >
+			<titulo:SubtituloView texto="Relatório"  width="99%" />
+		</containers:HBoxBancoob >
+			<input:Check id="checkRenovacao" label="Renovação"/>
+			<input:Check id="checkAtTarifaria" label="Atualização Tarifária"/>
+		
+	</containers:VBoxBancoob>
+	<containers:HBoxBancoob bottom="5" right="10">
+		<componentes:Botao id="btFechar" label="Fechar" click="fecharJanela();"/>
+	</containers:HBoxBancoob>
+	
+	<!-- INICIO - TELA DO FILTRO -->
+	<containers:HBoxBancoob y="5" right="8">
+		<componentes:Botao  id="btnFiltros" width="25" toolTip="Filtros de Pesquisa" cornerRadius="0" icon="{Mostrar}"/>
+		<mx:Panel id="pnMenu" headerColors="{['#FFFFFF','#FFFFFF']}" borderColor="#FFFFFF" 
+				  borderAlpha="1.0" horizontalScrollPolicy="off" shadowDirection="left"
+				  cornerRadius="0" width="0" height="230" paddingLeft="10" title="RELATÓRIO" >
+			<containers:VBoxBancoob width="99%" >
+				<titulo:SubtituloView id="subtituloPainelFiltro" width="97%" height="20" texto="Filtros" />
+				<containers:HBoxBancoob width="100%" paddingLeft="20" verticalAlign="bottom">
+					<componentes:Rotulo text="Período:" textAlign="left" width="4%"/>
+					<input:Data id="inicioPeriodo" dataDefault="{null}" validarMensagem="Informe a data inicial" validarObrigatorio="false" width="38%"/>
+					<componentes:Rotulo text="à" textAlign="left"/>
+					<input:Data id="fimPeriodo" dataDefault="{null}" validarMensagem="Informe a data final" validarObrigatorio="false" width="38%"/>
+				</containers:HBoxBancoob>
+				<containers:HBoxBancoob width="100%" paddingLeft="20" paddingTop="5">
+					<componentes:Rotulo text="Situação Renovação:" textAlign="left" width="4%"/>
+					<input:Combo id="cmbRenovacao" width="180" editable="false"/>
+				</containers:HBoxBancoob>
+				<containers:HBoxBancoob width="100%" paddingLeft="20" paddingTop="5">
+					<componentes:Rotulo text="Situação Atualização:" textAlign="left" width="4%"/>
+					<input:Combo id="cmbAtualizacao" width="180" editable="false"/>
+				</containers:HBoxBancoob>
+				
+				<containers:HBoxBancoob id="containerLinha" width="99%" paddingTop="7">
+					<titulo:LinhaView  right="0" left="0" width="100%"/>
+				</containers:HBoxBancoob>
+				
+				<containers:HBoxBancoob width="95%" height="50" horizontalAlign="right" paddingTop="5">
+					<componentes:Botao  id="btnLimpar" label="LIMPAR" toolTip="Limpar."/>
+					<componentes:Botao  id="btnPesquisar" label="Pesquisar"/> 
+				</containers:HBoxBancoob>
+				
+			</containers:VBoxBancoob>
+		</mx:Panel>
+	</containers:HBoxBancoob>	
+	<!-- FIM - TELA DO FILTRO -->
+	
+</componentes:Modulo>

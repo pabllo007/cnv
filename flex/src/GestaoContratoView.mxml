@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<componentes:Modulo
+	xmlns:containers="br.com.bancoob.componentes.containers.*"
+	xmlns:titulo="br.com.bancoob.componentes.titulo.*"
+	xmlns:input="br.com.bancoob.componentes.input.*"
+	xmlns:componentes="br.com.bancoob.componentes.*"
+	xmlns:navegacao="br.com.bancoob.componentes.navegacao.*"
+	xmlns:selecaogeral="br.com.sicoob.sisbr.cnv.util.selecaogeral.*"
+	xmlns:campos="br.com.bancoob.componentes.campos.*" 
+	xmlns:grid="br.com.bancoob.componentes.grid.*"
+	xmlns:tabelaPaginada="br.com.bancoob.componentes.tabelapaginada.*"
+	xmlns:mx="http://www.adobe.com/2006/mxml" width="960" height="370" 
+	backgroundAlpha="0.0" backgroundColor="#FFFFFF"
+	clipContent="false" horizontalScrollPolicy="auto" verticalScrollPolicy="auto" >
+	
+	<containers:VBoxBancoob y="10" x="10" width="100%" height="100%" >	
+		<containers:HBoxBancoob width="100%" >
+			<titulo:SubtituloView texto="Pesquisar Contrato"  width="99%" />		
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" id="filtroContrato" horizontalAlign="left" paddingLeft="20">
+			<componentes:Rotulo text="Tipo de procura:" />
+			<input:Combo id="cmbFiltro" width="120" editable="false"/>
+			
+			<componentes:Rotulo text="Procura por:"/>
+			<input:Texto id="inputFiltro"/>
+			
+			<componentes:Botao id="btnProcurar" label="Procurar"/>
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" id="hdGrid">
+			<tabelaPaginada:TabelaPaginadaMemoria id="grdResultado" x="2" y="4" width="99%" height="245"
+												  exibirScrollHorizontal="true" tabIndex="5"
+												  tamanhoPagina="10" titulo="Selecionar Contrato">
+				<tabelaPaginada:MetadadosTabela>
+					<grid:ColunaGrid dataField="numero" 
+									 headerText="Contrato/Doc" 
+									 width="80"
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="sigla" 
+									 headerText="Sigla" 
+									 width="160"
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="cnpjFormatado" 
+									 headerText="CNPJ" 
+									 width="270" 
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="assinaturaFormatada" 
+									 headerText="Data Assintura" 
+									 width="200" 
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="situacao" 
+									 headerText="Situação/Contrato" 
+									 width="80"
+									 textAlign="left"/>
+				</tabelaPaginada:MetadadosTabela>
+			</tabelaPaginada:TabelaPaginadaMemoria>
+		</containers:HBoxBancoob>
+		
+	</containers:VBoxBancoob>
+		
+	<containers:HBoxBancoob bottom="5" right="10">
+		<componentes:Botao id="btVisualizar" label="Visualizar" enabled="false"/>
+		<componentes:Botao id="btIncluir" label="Incluir"/>
+		<componentes:Botao id="btAlterar" label="Alterar" enabled="false"/>
+		<componentes:Botao id="btGerenciar" label="Gerenciar" enabled="false"/>
+		<componentes:Botao id="btFechar" label="Fechar" click="fecharJanela();" />
+	</containers:HBoxBancoob>
+</componentes:Modulo>

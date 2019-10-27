@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sisbrweb>
+  <MDICONTRATO>
+    <item id="MNUGESTAOCONTRATO" label="Gestão de Contrato" titulo="Gestão de Contrato" destino="servicosJavaGestaoConvenios" destinoArquivos="{destinoArquivos:destinoArquivosGestaoConvenios}" swf="/Convenio/Gestao/gestaocontrato" icone="br/com/bancoob/imagens/icos/modulos/cadastroClientes" mdi="MDICONTRATO" hash="69381afbc1325d8677d33fcbafa2e10a" />
+    <item id="MNUPAINELMONITORACAO" label="Painel de Monitoração" titulo="Painel de Monitoração" destino="servicosJavaGestaoConvenios" destinoArquivos="{destinoArquivos:destinoArquivosGestaoConvenios}" swf="/Convenio/Gestao/painelmonitoracao" icone="br/com/bancoob/imagens/icos/modulos/cadastroClientes" mdi="MDICONTRATO" hash="a2a0bf5f00e811a748f1d22baf32cc60" />
+    <item id="MNURELATORIOCONTRATO" label="Relatório" titulo="Relatório" destino="servicosJavaGestaoConvenios" destinoArquivos="{destinoArquivos:destinoArquivosGestaoConvenios}" swf="/Convenio/Gestao/relatoriocontrato" icone="br/com/bancoob/imagens/icos/modulos/cadastroClientes" mdi="MDICONTRATO" hash="87cc91d4ebd1fa20bbbbd26b97e26892" />
+  </MDICONTRATO>
+</sisbrweb>
+

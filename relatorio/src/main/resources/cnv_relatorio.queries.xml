@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE queries [
+<!ELEMENT queries (query*)>
+<!ELEMENT query (use-case+, description,paginacao?,command+, projecao?, ordenacoes?)>
+<!ELEMENT use-case    (#PCDATA) >
+<!ELEMENT description (#PCDATA) >
+<!ELEMENT command     (#PCDATA) >
+<!ELEMENT parametros  (#PCDATA) >
+<!ELEMENT projecao (#PCDATA) >
+<!ELEMENT paginar  (#PCDATA) >
+<!ELEMENT paginacao (#PCDATA) >
+<!ELEMENT colunaCodigo    (#PCDATA) > 
+<!ELEMENT colunaDescricao    (#PCDATA) >
+<!ELEMENT numeroOcorrenciasPorPagina    (#PCDATA) >
+<!ELEMENT primeiraCondicao    (#PCDATA) >
+<!ELEMENT ascendente    (#PCDATA) >
+<!ELEMENT ordenacoes (ordenacao+)>
+<!ELEMENT ordenacao (#PCDATA)>
+
+<!ELEMENT sql  (#PCDATA) >
+
+<!ATTLIST ordenacao chave CDATA    #REQUIRED >
+<!ATTLIST ordenacao default CDATA    #IMPLIED >
+
+<!ATTLIST command parametros CDATA    #IMPLIED  >
+<!ATTLIST command paginar CDATA    #IMPLIED  >
+
+<!ATTLIST use-case name CDATA    #REQUIRED >
+
+<!ATTLIST query name CDATA    #REQUIRED >
+
+<!ATTLIST paginacao colunaCodigo CDATA    #REQUIRED>
+<!ATTLIST paginacao colunaDescricao CDATA    #REQUIRED>
+<!ATTLIST paginacao numeroOcorrenciasPorPagina CDATA    #REQUIRED>
+<!ATTLIST paginacao primeiraCondicao CDATA    #REQUIRED>
+<!ATTLIST paginacao ascendente CDATA    #REQUIRED>
+<!ATTLIST paginacao hint CDATA    #REQUIRED>
+<!ATTLIST paginacao hintAuxiliar CDATA   #IMPLIED >
+]>
+
+<queries>
+
+	<query name="BUSCAR_REGRA_REPASSE_POR_REPASSE_EMPRESA_TED">
+		<use-case name="Recuperar a regra repasse usado para TED"></use-case>
+		<description>Recuperar a regra repasse usado para TED</description>
+		<command>
+			<![CDATA[
+				 SELECT  DISTINCT RR.CODBANCO, RR.CODAGENCIA,
+					RR.NUMCONTACORRENTE, RR.DESCHISTORICOSPB 
+				FROM CNV.REPASSEEMPRESA RE
+					INNER JOIN CNV.REGRAREPASSE RR ON RE.IDREGRAREPASSE = RR.IDREGRAREPASSE
+				WHERE RE.DATAREPASSE = :dataProcessamento 
+				AND RE.IDREPASSEEMPRESATED = :idRepasseEmpresaTed
+			]]>
+		</command>
+	</query>
+
+</queries>
+

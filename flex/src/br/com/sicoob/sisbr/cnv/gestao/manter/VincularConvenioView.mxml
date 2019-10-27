@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<componentes:Modulo
+	xmlns:containers="br.com.bancoob.componentes.containers.*"
+	xmlns:titulo="br.com.bancoob.componentes.titulo.*"
+	xmlns:input="br.com.bancoob.componentes.input.*"
+	xmlns:componentes="br.com.bancoob.componentes.*"
+	xmlns:navegacao="br.com.bancoob.componentes.navegacao.*"
+	xmlns:selecaogeral="br.com.sicoob.sisbr.cnv.util.selecaogeral.*"
+	xmlns:campos="br.com.bancoob.componentes.campos.*" 
+	xmlns:grid="br.com.bancoob.componentes.grid.*"
+	xmlns:tabelaPaginada="br.com.bancoob.componentes.tabelapaginada.*"
+	xmlns:mx="http://www.adobe.com/2006/mxml" width="660" height="330" 
+	backgroundAlpha="0.0" backgroundColor="#FFFFFF" 
+	clipContent="false" horizontalScrollPolicy="auto" verticalScrollPolicy="auto" xmlns:renderer="br.com.sicoob.sisbr.cnv.gestao.renderer.*" >
+	<containers:VBoxBancoob width="100%" height="100%">
+		
+		<containers:HBoxBancoob paddingTop="10" paddingLeft="10">
+			<componentes:Rotulo text="Tipo de Procura:" textAlign="left" width="20%"/>
+			<input:Combo id="idComboProcura" editable="false" width="7%"/>			
+		
+			<componentes:Rotulo text="Procura por:" textAlign="right" width="30%"/>
+			<input:Texto id="inputFiltro" width="40%"/>
+			
+			<containers:HBoxBancoob paddingLeft="40" horizontalAlign="right">
+				<componentes:Botao id="btnProcurar" label="Procurar"/>
+			</containers:HBoxBancoob>	
+				
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" paddingLeft="10">
+			<tabelaPaginada:TabelaPaginadaMemoria id="grdResultado" x="2" y="4" width="99%" height="250"
+												  exibirScrollHorizontal="false" tabIndex="5"
+												  tamanhoPagina="10" titulo="Vincular Convênio">
+				<tabelaPaginada:MetadadosTabela>
+					<grid:ColunaGrid id="colSelecao" headerText="" textAlign="center" sortable="false"
+									 dataField="selecionado" width="40">
+						<grid:itemRenderer>
+							<mx:Component>
+								<renderer:GridCheckOutrosConveniosLoteItemRenderer/>
+							</mx:Component>
+						</grid:itemRenderer>
+					</grid:ColunaGrid>
+					<grid:ColunaGrid dataField="numero" 
+									 headerText="Convênio" 
+									 width="80"
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="sigla" 
+									 headerText="Sigla" 
+									 width="160"
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="cnpj" 
+									 headerText="CNPJ" 
+									 width="120" 
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="segmento" 
+									 headerText="Segmento" 
+									 width="180" 
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="febraban" 
+									 headerText="Cod Febraban" 
+									 width="80"
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="situacao" 
+									 headerText="Situação" 
+									 width="80"
+									 textAlign="left"/>
+				</tabelaPaginada:MetadadosTabela>
+			</tabelaPaginada:TabelaPaginadaMemoria>
+		</containers:HBoxBancoob>
+		
+	</containers:VBoxBancoob>
+
+	<containers:HBoxBancoob bottom="5" right="10">
+		<componentes:Botao id="btIncluir" label="Incluir"/>
+		<componentes:Botao id="btFechar" label="Fechar" click="fecharJanela();"/>
+	</containers:HBoxBancoob>
+	
+</componentes:Modulo>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE queries [
+<!ELEMENT queries (query*)>
+<!ELEMENT query (use-case+, description,paginacao?,command+, projecao?, ordenacoes?)>
+<!ELEMENT use-case    (#PCDATA) >
+<!ELEMENT description (#PCDATA) >
+<!ELEMENT command     (#PCDATA) >
+<!ELEMENT parametros  (#PCDATA) >
+<!ELEMENT projecao (#PCDATA) >
+<!ELEMENT paginar  (#PCDATA) >
+<!ELEMENT paginacao (#PCDATA) >
+<!ELEMENT colunaCodigo    (#PCDATA) >
+<!ELEMENT colunaDescricao    (#PCDATA) >
+<!ELEMENT numeroOcorrenciasPorPagina    (#PCDATA) >
+<!ELEMENT primeiraCondicao    (#PCDATA) >
+<!ELEMENT ascendente    (#PCDATA) >
+<!ELEMENT ordenacoes (ordenacao+)>
+<!ELEMENT ordenacao (#PCDATA)>
+
+<!ELEMENT sql  (#PCDATA) >
+
+<!ATTLIST ordenacao chave CDATA    #REQUIRED >
+<!ATTLIST ordenacao default CDATA    #IMPLIED >
+
+<!ATTLIST command parametros CDATA    #IMPLIED  >
+<!ATTLIST command paginar CDATA    #IMPLIED  >
+
+<!ATTLIST use-case name CDATA    #REQUIRED >
+
+<!ATTLIST query name CDATA    #REQUIRED >
+
+<!ATTLIST paginacao colunaCodigo CDATA    #REQUIRED>
+<!ATTLIST paginacao colunaDescricao CDATA    #REQUIRED>
+<!ATTLIST paginacao numeroOcorrenciasPorPagina CDATA    #REQUIRED>
+<!ATTLIST paginacao primeiraCondicao CDATA    #REQUIRED>
+<!ATTLIST paginacao ascendente CDATA    #REQUIRED>
+<!ATTLIST paginacao hint CDATA    #REQUIRED>
+<!ATTLIST paginacao hintAuxiliar CDATA   #IMPLIED >
+]>
+
+<queries>
+
+	<query name="CONTRATOS">
+		<use-case name="SQL - Busca contratos"></use-case>
+		<description>SQL - Busca contratos</description>
+		<command>
+			<![CDATA[SELECT '' as cnpj, '' as fantasia, '' as razaoSocial,
+					CASE WHEN DATARECISAO IS NULL THEN 'ATIVO' ELSE 'ENCERRADO' END as situacao,
+					DATAASSINATURACONTRATO as assinatura,
+					IDCONTRATO as id,
+					IDINSTITUICAOEMPRESA as instituicao,
+					IDPESSOAEMPRESA as pessoa,
+					NUMCONTRATO as numero,
+					SIGLACONTRATO as sigla
+				FROM CNV.CONTRATOARRECADACAO
+				ORDER BY DATAASSINATURACONTRATO DESC]]>
+		</command>
+	</query>
+	<query name="CONTRATOS_ATIVOS_RENOVACAO">
+		<use-case
+			name="SQL - Busca contratos para monitoração de renovação"></use-case>
+		<description>SQL - Busca contratos para monitoração de renovação</description>
+		<command>
+			<![CDATA[SELECT '' as cnpj,
+					BOLACAOOPERACIONALRENOVACAO as acao,
+					DATAVIGENCIA as vigencia,
+					DAYS (DATARENOVACAO) - DAYS (CURRENT DATE) as prazo,
+					DESCSITUACAOCONTRATO as situacao,
+					IDCONTRATO as id,
+					IDINSTITUICAOEMPRESA as instituicao,
+					IDPESSOAEMPRESA as pessoa,
+					NUMCONTRATO as numero,
+					SIGLACONTRATO as sigla
+				FROM CNV.CONTRATOARRECADACAO, CNV.SITUACAOCONTRATO
+				WHERE CNV.CONTRATOARRECADACAO.CODSITUACAORENOVACAO = CNV.SITUACAOCONTRATO.IDSITUACAOCONTRATO AND
+					CNV.CONTRATOARRECADACAO.DATARECISAO IS NULL
+				ORDER BY DATAASSINATURACONTRATO DESC]]>
+		</command>
+	</query>
+	<query name="CONTRATOS_ATIVOS_TARIFARIO">
+		<use-case
+			name="SQL - Busca contratos para monitoração de atualização tarifária"></use-case>
+		<description>SQL - Busca contratos para monitoração de atualização
+			tarifária</description>
+		<command>
+			<![CDATA[SELECT '' as cnpj,
+					BOLACAOOPERACIONALTARIFARIA as acao,
+					DATAVIGENCIA as vigencia,
+					DAYS (DATAATUALIZACAOTARIFARIO) - DAYS (CURRENT DATE)  as prazo,
+					DESCSITUACAOCONTRATO as situacao,
+					IDCONTRATO as id,
+					IDINSTITUICAOEMPRESA as instituicao,
+					IDPESSOAEMPRESA as pessoa,
+					NUMCONTRATO as numero,
+					SIGLACONTRATO as sigla,
+					0 as prazo
+				FROM CNV.CONTRATOARRECADACAO, CNV.SITUACAOCONTRATO
+				WHERE CNV.CONTRATOARRECADACAO.CODSITUACAOTARIFARIA = CNV.SITUACAOCONTRATO.IDSITUACAOCONTRATO AND
+					CNV.CONTRATOARRECADACAO.DATARECISAO IS NULL
+				ORDER BY DATAASSINATURACONTRATO DESC]]>
+		</command>
+	</query>
+	<query name="CONTRATOS_POR_INSTITUICAO_PESSOA">
+		<use-case
+			name="SQL - Busca contratos por instituição e pessoa"></use-case>
+		<description>SQL - Busca contratos por instituição e pessoa</description>
+		<command>
+			<![CDATA[SELECT '' as cnpj, '' as nomeCompleto, '' as nomePessoa,
+					CASE WHEN DATARECISAO IS NULL THEN 'ATIVO' ELSE 'ENCERRADO' END as situacao,
+					DATAASSINATURACONTRATO as assinatura,
+					IDCONTRATO as id,
+					IDINSTITUICAOEMPRESA as instituicao,
+					IDPESSOAEMPRESA as pessoa,
+					NUMCONTRATO as numero,
+					SIGLACONTRATO as sigla
+				FROM CNV.CONTRATOARRECADACAO
+				WHERE IDINSTITUICAOEMPRESA = :instituicao AND IDPESSOAEMPRESA = :pessoa
+				ORDER BY DATAASSINATURACONTRATO DESC]]>
+		</command>
+	</query>
+	<query name="CONTRATOS_POR_NUMERO">
+		<use-case name="SQL - Busca contratos por número"></use-case>
+		<description>SQL - Busca contratos por número</description>
+		<command>
+			<![CDATA[SELECT '' as cnpj, '' as nomeCompleto, '' as nomePessoa,
+					CASE WHEN DATARECISAO IS NULL THEN 'ATIVO' ELSE 'ENCERRADO' END as situacao,
+					DATAASSINATURACONTRATO as assinatura,
+					IDCONTRATO as id,
+					IDINSTITUICAOEMPRESA as instituicao,
+					IDPESSOAEMPRESA as pessoa,
+					NUMCONTRATO as numero,
+					SIGLACONTRATO as sigla
+				FROM CNV.CONTRATOARRECADACAO
+				WHERE NUMCONTRATO = :numero
+				ORDER BY DATAASSINATURACONTRATO DESC]]>
+		</command>
+	</query>
+	<query name="CONTRATOS_POR_SIGLA">
+		<use-case name="SQL - Busca contratos por sigla"></use-case>
+		<description>SQL - Busca contratos por sigla</description>
+		<command>
+			<![CDATA[SELECT '' as cnpj, '' as nomeCompleto, '' as nomePessoa,
+					CASE WHEN DATARECISAO IS NULL THEN 'ATIVO' ELSE 'ENCERRADO' END as situacao,
+					DATAASSINATURACONTRATO as assinatura,
+					IDCONTRATO as id,
+					IDINSTITUICAOEMPRESA as instituicao,
+					IDPESSOAEMPRESA as pessoa,
+					NUMCONTRATO as numero,
+					SIGLACONTRATO as sigla
+				FROM CNV.CONTRATOARRECADACAO
+				WHERE SIGLACONTRATO = :sigla
+				ORDER BY DATAASSINATURACONTRATO DESC]]>
+		</command>
+	</query>
+	<query name="CONVENIOS_LIVRES">
+		<use-case
+			name="SQL - Busca convênios não vinculados a um contrato"></use-case>
+		<description>SQL - Busca convênios não vinculados a um contrato</description>
+		<command>
+			<![CDATA[SELECT CODCONVENIO as numero,
+					DESCTIPOSEGMENTOCONCESSIONARIA as segmento,
+					DESCTIPOSITUACAOCONVENIO as situacao,
+					false as selecionado,
+					IDCONVENIO as id,
+					NUMCNPJCONVENIO as cnpj,
+					NUMCONVENIOFEBRABAN as febraban,
+					SIGLACONVENIO as sigla
+				FROM CNV.CONVENIO, CNV.TIPOSEGMENTOCONCESSIONARIA, CNV.TIPOSITUACAOCONVENIO
+				WHERE CNV.CONVENIO.CODTIPOSITUACAOCONVENIO = CNV.TIPOSITUACAOCONVENIO.CODTIPOSITUACAOCONVENIO AND
+					CNV.CONVENIO.IDCONVENIO NOT IN (SELECT IDCONVENIO FROM CNV.CONTRATOARRECADACAOCONVENIO) AND
+					CODTIPOSEGMENTOCONCESSIONARIA = CODTIPOSEGMENTO]]>
+		</command>
+	</query>
+	<query name="CONVENIOS_LIVRES_POR_CNPJ">
+		<use-case
+			name="SQL - Busca convênios não vinculados a um contrato por CNPJ"></use-case>
+		<description>SQL - Busca convênios não vinculados a um contrato por
+			CNPJ</description>
+		<command>
+			<![CDATA[SELECT CODCONVENIO as numero,
+					DESCTIPOSEGMENTOCONCESSIONARIA as segmento,
+					DESCTIPOSITUACAOCONVENIO as situacao,
+					false as selecionado,
+					IDCONVENIO as id,
+					NUMCNPJCONVENIO as cnpj,
+					NUMCONVENIOFEBRABAN as febraban,
+					SIGLACONVENIO as sigla
+				FROM CNV.CONVENIO, CNV.TIPOSEGMENTOCONCESSIONARIA, CNV.TIPOSITUACAOCONVENIO
+				WHERE CNV.CONVENIO.CODTIPOSITUACAOCONVENIO = CNV.TIPOSITUACAOCONVENIO.CODTIPOSITUACAOCONVENIO AND
+					CNV.CONVENIO.IDCONVENIO NOT IN (SELECT IDCONVENIO FROM CNV.CONTRATOARRECADACAOCONVENIO) AND
+					CODTIPOSEGMENTOCONCESSIONARIA = CODTIPOSEGMENTO AND NUMCNPJCONVENIO = :cnpj]]>
+		</command>
+	</query>
+	<query name="CONVENIOS_LIVRES_POR_NUMERO">
+		<use-case
+			name="SQL - Busca convênios não vinculados a um contrato por número"></use-case>
+		<description>SQL - Busca convênios não vinculados a um contrato por
+			número</description>
+		<command>
+			<![CDATA[SELECT CODCONVENIO as numero,
+					DESCTIPOSEGMENTOCONCESSIONARIA as segmento,
+					DESCTIPOSITUACAOCONVENIO as situacao,
+					false as selecionado,
+					IDCONVENIO as id,
+					NUMCNPJCONVENIO as cnpj,
+					NUMCONVENIOFEBRABAN as febraban,
+					SIGLACONVENIO as sigla
+				FROM CNV.CONVENIO, CNV.TIPOSEGMENTOCONCESSIONARIA, CNV.TIPOSITUACAOCONVENIO
+				WHERE CNV.CONVENIO.CODTIPOSITUACAOCONVENIO = CNV.TIPOSITUACAOCONVENIO.CODTIPOSITUACAOCONVENIO AND
+					CNV.CONVENIO.IDCONVENIO NOT IN (SELECT IDCONVENIO FROM CNV.CONTRATOARRECADACAOCONVENIO) AND
+					CODCONVENIO = :numero AND CODTIPOSEGMENTOCONCESSIONARIA = CODTIPOSEGMENTO]]>
+		</command>
+	</query>
+	<query name="CONVENIOS_LIVRES_POR_SIGLA">
+		<use-case
+			name="SQL - Busca convênios não vinculados a um contrato por sigla"></use-case>
+		<description>SQL - Busca convênios não vinculados a um contrato por
+			sigla</description>
+		<command>
+			<![CDATA[SELECT CODCONVENIO as numero,
+					DESCTIPOSEGMENTOCONCESSIONARIA as segmento,
+					DESCTIPOSITUACAOCONVENIO as situacao,
+					false as selecionado,
+					IDCONVENIO as id,
+					NUMCNPJCONVENIO as cnpj,
+					NUMCONVENIOFEBRABAN as febraban,
+					SIGLACONVENIO as sigla
+				FROM CNV.CONVENIO, CNV.TIPOSEGMENTOCONCESSIONARIA, CNV.TIPOSITUACAOCONVENIO
+				WHERE CNV.CONVENIO.CODTIPOSITUACAOCONVENIO = CNV.TIPOSITUACAOCONVENIO.CODTIPOSITUACAOCONVENIO AND
+					CNV.CONVENIO.IDCONVENIO NOT IN (SELECT IDCONVENIO FROM CNV.CONTRATOARRECADACAOCONVENIO) AND
+					CODTIPOSEGMENTOCONCESSIONARIA = CODTIPOSEGMENTO AND SIGLACONVENIO = :sigla]]>
+		</command>
+	</query>
+	<query name="RELATORIO_BUSCAR">
+		<use-case name="SQL - Busca dados para relatorio com filtro"></use-case>
+		<description>SQL - Busca dados para relatorio com filtro</description>
+		<command>
+			<![CDATA[
+				SELECT
+					distinct contrato
+				FROM 
+					br.com.sicoob.cnv.gestao.entity.Contrato contrato
+				WHERE
+					1 = 1
+					<j:if test="${tipo == 0}">
+						ORDER BY contrato.dataAssinaturaContrato DESC
+					</j:if>
+					<j:if test="${tipo == 1}">
+						AND contrato.dataRescisao is null
+						ORDER BY contrato.dataVigencia DESC
+					</j:if>
+					<j:if test="${tipo == 2}">
+						AND contrato.dataRescisao is not null
+						ORDER BY contrato.dataRescisao DESC
+					</j:if>
+					<j:if test="${tipo == 3}">
+						AND contrato.dataRescisao is null
+						AND contrato.dataRenovacao between '${dataInicio}'  and '${dataFim}'
+						ORDER BY contrato.dataRenovacao DESC
+					</j:if>
+					<j:if test="${tipo == 4}">
+						AND contrato.dataRescisao is null
+						ORDER BY contrato.dataRenovacao DESC
+					</j:if>
+					<j:if test="${tipo == 5}">
+						AND contrato.dataRescisao is null
+						AND contrato.dataAtualizacaoTarifario between '${dataInicio}'  and '${dataFim}'
+						ORDER BY contrato.dataAtualizacaoTarifario DESC
+					</j:if>
+					]]>
+		</command>
+	</query>
+</queries>

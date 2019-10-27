@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<componentes:Modulo
+	xmlns:containers="br.com.bancoob.componentes.containers.*"
+	xmlns:titulo="br.com.bancoob.componentes.titulo.*"
+	xmlns:input="br.com.bancoob.componentes.input.*"
+	xmlns:componentes="br.com.bancoob.componentes.*"
+	xmlns:navegacao="br.com.bancoob.componentes.navegacao.*"
+	xmlns:selecaogeral="br.com.sicoob.sisbr.cnv.util.selecaogeral.*"
+	xmlns:campos="br.com.bancoob.componentes.campos.*"
+	xmlns:botao="br.com.bancoob.componentes.painellista.*"
+	xmlns:grid="br.com.bancoob.componentes.grid.*"
+	xmlns:tabelaPaginada="br.com.bancoob.componentes.tabelapaginada.*"
+	xmlns:mx="http://www.adobe.com/2006/mxml" width="960" height="560" 
+	backgroundAlpha="0.0" backgroundColor="#FFFFFF" 
+	clipContent="false" horizontalScrollPolicy="auto" verticalScrollPolicy="auto" xmlns:local="*" xmlns:renderer="br.com.sicoob.sisbr.cnv.gestao.renderer.*" >
+	
+	<containers:VBoxBancoob y="10" x="10" width="100%" height="100%" >
+		<containers:HBoxBancoob width="100%" >
+			<titulo:SubtituloView texto="Dados Cadastrais"  width="99%" />		
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" paddingLeft="20">
+			<componentes:Rotulo text="CNPJ:" textAlign="left" width="4.7%"/>
+			<input:InputCNPJ id="inputCNPJ" width="25%"/>
+			
+			<componentes:Rotulo text="Sigla:" textAlign="left" width="4%"/>
+			<input:Texto id="inputSigla" width="25%"/>
+			
+			<componentes:Rotulo text="N° Contrato/Doc:" textAlign="left" width="7%"/>
+			<input:Texto id="inputNumContrato" width="25%"/>
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" paddingLeft="20">
+			<componentes:Rotulo text="Razão Social:" textAlign="left" />
+			<componentes:Rotulo id="inputRazao" width="89.7%"/>
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" paddingLeft="20">
+			<componentes:Rotulo text="Nome Fantasia:" textAlign="left" />
+			<componentes:Rotulo id="inputNome" width="88.5%"/>
+		</containers:HBoxBancoob>
+			
+		<containers:HBoxBancoob width="100%" id="hdGrid">
+			<tabelaPaginada:TabelaPaginadaMemoria id="grdResultado" x="2" y="4" width="99%" height="200"
+												  exibirScrollHorizontal="true" tabIndex="5"
+												  tamanhoPagina="30" titulo="Vincular Convênio">
+				<tabelaPaginada:MetadadosTabela>
+					<grid:ColunaGrid id="colSelecao" headerText="" textAlign="center" sortable="false"
+									 		dataField="selecionado" width="40">
+						<grid:itemRenderer>
+							<mx:Component>
+								<renderer:GridCheckAlterarContratoLoteItemRenderer/>
+							</mx:Component>
+						</grid:itemRenderer>
+					</grid:ColunaGrid>
+					<grid:ColunaGrid dataField="numero" 
+									 headerText="Convênio" 
+									 width="80"
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="sigla" 
+									 headerText="Sigla" 
+									 width="270"
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="cnpjFormatado" 
+									 headerText="CNPJ" 
+									 width="160" 
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="segmento.nome" 
+									 headerText="Segmento" 
+									 width="200" 
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="febraban" 
+									 headerText="Cod Febraban" 
+									 width="80"
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="situacao.nome" 
+									 headerText="Situação" 
+									 width="80"
+									 textAlign="left"/>
+				</tabelaPaginada:MetadadosTabela>
+			</tabelaPaginada:TabelaPaginadaMemoria>
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob id="idBotaoBuscar" width="100%" horizontalAlign="left" paddingRight="10">
+			<componentes:Rotulo text="Outros Convênios:" textAlign="left" />
+			<botao:BotaoProcurarView id="btnBuscar" label="" width="30"/>
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" >
+			<titulo:SubtituloView texto="Encerramento"  width="99%" />		
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" paddingLeft="20" paddingRight="10">
+			<componentes:Rotulo text="Rescisão: " textAlign="left" width="5%"/>
+			<input:Data id="dataRescisaoContrato" dataDefault="{null}" validarMensagem="Informe a data final" validarObrigatorio="false" width="11%"/>
+		
+			<componentes:Rotulo paddingLeft="250" text="Justificativa: " textAlign="right" width="5%"/>
+			<mx:TextArea id="txtAreaJustificativa" width="420" height="120" textAlign="left" maxChars="2000" />
+			
+		</containers:HBoxBancoob>
+	</containers:VBoxBancoob>
+	
+		<containers:HBoxBancoob bottom="5" right="10">
+			<componentes:Botao id="btSalvar" label="Salvar"/>
+			<componentes:Botao id="btFechar" label="Fechar" click="fecharJanela();"/>
+		</containers:HBoxBancoob>
+</componentes:Modulo>

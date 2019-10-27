@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<componentes:Modulo
+	xmlns:containers="br.com.bancoob.componentes.containers.*"
+	xmlns:titulo="br.com.bancoob.componentes.titulo.*"
+	xmlns:input="br.com.bancoob.componentes.input.*"
+	xmlns:componentes="br.com.bancoob.componentes.*"
+	xmlns:navegacao="br.com.bancoob.componentes.navegacao.*"
+	xmlns:selecaogeral="br.com.sicoob.sisbr.cnv.util.selecaogeral.*"
+	xmlns:campos="br.com.bancoob.componentes.campos.*" 
+	xmlns:grid="br.com.bancoob.componentes.grid.*"
+	xmlns:tabelaPaginada="br.com.bancoob.componentes.tabelapaginada.*"
+	xmlns:mx="http://www.adobe.com/2006/mxml" width="960" height="690"  
+	backgroundAlpha="0.0" backgroundColor="#FFFFFF" 
+	clipContent="false" horizontalScrollPolicy="auto" verticalScrollPolicy="auto" >
+	
+	<containers:VBoxBancoob y="10" x="10" width="100%" height="100%" >
+		<containers:HBoxBancoob width="100%" >
+			<titulo:SubtituloView texto="Dados Cadastrais"  width="99%" />		
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" paddingLeft="20">
+			<componentes:Rotulo text="CNPJ:" textAlign="left" width="2%" fontWeight="bold"/>
+			<componentes:Rotulo id="labelCNPJ" width="15%" fontWeight="bold"/>
+			
+			<componentes:Rotulo text="Sigla:" textAlign="left" width="2%" fontWeight="bold"/>
+			<componentes:Rotulo id="labelSigla" width="35%" fontWeight="bold"/>
+			
+			<componentes:Rotulo text="N° Contrato/Doc:" textAlign="left" width="2%" fontWeight="bold"/>
+			<componentes:Rotulo id="labelNumContrato" width="30%" fontWeight="bold"/>
+			
+			<componentes:Rotulo text="Situação do Contrato:" textAlign="left" width="2%" fontWeight="bold"/>
+			<componentes:Rotulo id="labelSituacaoContrato" width="12%" fontWeight="bold"/>
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" paddingLeft="20">
+			<componentes:Rotulo text="Razão Social:" textAlign="left" fontWeight="bold"/>
+			<componentes:Rotulo id="inputRazao" width="89.7%" fontWeight="bold"/>
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" paddingLeft="20">
+			<componentes:Rotulo text="Nome Fantasia:" textAlign="left" fontWeight="bold"/>
+			<componentes:Rotulo id="labelNome" width="88.5%" fontWeight="bold"/>
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" >
+			<titulo:SubtituloView texto="Prazos Contratuais"  width="99%" />		
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" paddingLeft="20">
+			<componentes:Rotulo text="Assinatura do Contrato: " textAlign="left" width="5%"/>
+			<input:Data id="dataAssinaturaContrato" dataDefault="{null}" validarMensagem="Informe a data final" validarObrigatorio="false" width="9.7%"/>
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" paddingLeft="20" verticalAlign="middle">
+			<componentes:Rotulo text="Vigência: " textAlign="left" width="12.1%"/>
+			<containers:VBoxBancoob id="campoDataVigencia" width="93" height="100%">
+				<input:Data id="dataVigencia" dataDefault="{null}" validarMensagem="Informe a data final" validarObrigatorio="false" width="99%"/>
+			</containers:VBoxBancoob>
+				
+			<input:Check id="checkIndeterminado" textAlign="right" width="3%"/>
+			<componentes:Rotulo text="Indeterminado" />
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" paddingLeft="20">
+			<componentes:Rotulo text="Renovação: " textAlign="left" width="12.1%"/>
+			<input:Data id="dataRenovacao" dataDefault="{null}" validarMensagem="Informe a data final" validarObrigatorio="false" width="10%"/>
+			
+			<componentes:Rotulo text="Alerta para Renovação:" textAlign="right" width="40%"/>
+			<input:Combo id="idComboRenovacao" editable="false" inserirItemOpcional="true" width="10%" labelField="descricao" labelItemOpcional="SELECIONE"/>
+			<componentes:Rotulo text="Dias"/>
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" paddingLeft="20">
+			<componentes:Rotulo text="Atualização Tarifária: " textAlign="left" width="12.1%"/>
+			<input:Data id="dataAtualizacaoTarifaria" dataDefault="{null}" validarMensagem="Informe a data final" validarObrigatorio="false" width="10%"/>
+			
+			<componentes:Rotulo text="Alerta para Atualização:" textAlign="right" width="40%"/>
+			<input:Combo id="idComboAtualizacao" editable="false" inserirItemOpcional="true" width="10%" labelField="descricao" labelItemOpcional="SELECIONE"/>
+			<componentes:Rotulo text="Dias"/>
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" >
+			<titulo:SubtituloView texto="Renovação"  width="99%" />		
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%">
+			
+			<containers:VBoxBancoob width="40%" paddingLeft="20">
+				<componentes:Rotulo text="Situação:"/>
+				<input:RadioGrupoBancoob id="situacaoRenovacao"/>
+				<containers:HBoxBancoob>
+					<input:Radio id="rnVigente" group="{situacaoRenovacao}" enabled="false"/>
+					<componentes:Rotulo text="Vigente"/>					
+				</containers:HBoxBancoob>
+				<containers:HBoxBancoob>
+					<input:Radio id="rnPeriodoRenovacao" group="{situacaoRenovacao}" enabled="false"/>
+					<componentes:Rotulo text="Período de Renovação"/>					
+				</containers:HBoxBancoob>
+				<containers:HBoxBancoob>
+					<input:Radio id="rnVencido" group="{situacaoRenovacao}" enabled="false"/>
+					<componentes:Rotulo text="Vencido"/>					
+				</containers:HBoxBancoob>
+			</containers:VBoxBancoob>
+			
+			<containers:VBoxBancoob width="40%" >
+				<componentes:Rotulo text="Ação Operacional:"/>
+				<input:RadioGrupoBancoob id="operacionalRenovacao"/>
+				<input:Radio id="rnIniciado" label="Iniciado" group="{operacionalRenovacao}"/>
+				<input:Radio id="rnPendente" label="Pendente" group="{operacionalRenovacao}" enabled="false"/>
+			</containers:VBoxBancoob>
+			
+			<containers:VBoxBancoob width="20%">
+				<containers:HBoxBancoob width="20%">
+					<componentes:Rotulo id="labelNumRnPrazoObrigatorio" text="Prazo:" visible="false" textAlign="right"/>
+					<componentes:Rotulo id="numeroRnPrazoObrigatorio" color="#DC143C" visible="false" paddingLeft="-10"/>
+				</containers:HBoxBancoob>
+				<containers:HBoxBancoob width="20%">
+					<componentes:Rotulo id="labelNumRnPrazo" text="Prazo:" textAlign="right"/>
+					<componentes:Rotulo id="numeroRnPrazo" paddingLeft="-10"/>
+				</containers:HBoxBancoob>
+			</containers:VBoxBancoob>
+			
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" >
+			<titulo:SubtituloView texto="Atualização Tarifária" width="99%" />		
+		</containers:HBoxBancoob>
+		<containers:HBoxBancoob width="100%">
+			
+			<containers:VBoxBancoob width="40%" paddingLeft="20">
+				<componentes:Rotulo text="Situação:"/>
+				<input:RadioGrupoBancoob id="situacaoAtTarifaria"/>
+				<containers:HBoxBancoob>
+					<input:Radio id="atVigente" group="{situacaoAtTarifaria}" enabled="false"/>
+					<componentes:Rotulo text="Vigente"/>					
+				</containers:HBoxBancoob>
+				<containers:HBoxBancoob>
+					<input:Radio id="atPeriodoRenovacao" group="{situacaoAtTarifaria}" enabled="false"/>
+					<componentes:Rotulo text="Período de Renovação"/>					
+				</containers:HBoxBancoob>
+				<containers:HBoxBancoob>
+					<input:Radio id="atVencido" group="{situacaoAtTarifaria}" enabled="false"/>
+					<componentes:Rotulo text="Vencido"/>					
+				</containers:HBoxBancoob>
+			</containers:VBoxBancoob>
+			
+			<containers:VBoxBancoob width="40%">
+				<componentes:Rotulo text="Ação Operacional:"/>
+				<input:RadioGrupoBancoob id="operacionalAtTarifaria"/>
+				<input:Radio id="atIniciado" label="Iniciado" group="{operacionalAtTarifaria}"/>
+				<input:Radio id="atPendente" label="Pendente" group="{operacionalAtTarifaria}" enabled="false"/>
+			</containers:VBoxBancoob>
+			
+			<containers:VBoxBancoob width="20%">
+				<containers:HBoxBancoob width="20%">
+					<componentes:Rotulo id="labelNumAtPrazoObrigatorio" text="Prazo:" textAlign="right" visible="false"/>
+					<componentes:Rotulo id="numeroAtPrazoObrigatorio" color="#DC143C" visible="false" paddingLeft="-10"/>
+				</containers:HBoxBancoob>
+				<containers:HBoxBancoob width="20%">
+					<componentes:Rotulo id="labelNumAtPrazo" text="Prazo:" textAlign="right"/>
+					<componentes:Rotulo id="numeroAtPrazo" paddingLeft="-10"/>
+				</containers:HBoxBancoob>
+			</containers:VBoxBancoob>
+		</containers:HBoxBancoob>
+		
+		<containers:HBoxBancoob width="100%" >
+			<titulo:SubtituloView texto="Convênios Vinculados" width="99%" />		
+		</containers:HBoxBancoob>
+
+		<containers:HBoxBancoob width="100%" paddingRight="10" >
+			<grid:Grid id="listaGrid" rowCount="4" width="100%" editable="false">
+				<grid:columns>
+					<grid:ColunaGrid dataField="numero" 
+									 headerText="Convênio" 
+									 width="80"
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="sigla" 
+									 headerText="Sigla" 
+									 width="230"
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="cnpjFormatado" 
+									 headerText="CNPJ" 
+									 width="160" 
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="segmento.nome" 
+									 headerText="Segmento" 
+									 width="130" 
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="febraban" 
+									 headerText="Cod Febraban" 
+									 width="60"
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="situacao.nome" 
+									 headerText="Situação" 
+									 width="80"
+									 textAlign="left"/>
+				</grid:columns>
+			</grid:Grid>
+		</containers:HBoxBancoob>
+		
+	</containers:VBoxBancoob>
+
+	<containers:HBoxBancoob bottom="5" right="10">
+		<componentes:Botao id="btnSalvar" label="Salvar"/>
+		<componentes:Botao id="btFechar" label="Fechar" click="fecharJanela();"/>
+	</containers:HBoxBancoob>
+	
+</componentes:Modulo>

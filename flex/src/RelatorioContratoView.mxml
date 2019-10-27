@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<componentes:Modulo
+	xmlns:containers="br.com.bancoob.componentes.containers.*"
+	xmlns:titulo="br.com.bancoob.componentes.titulo.*"
+	xmlns:input="br.com.bancoob.componentes.input.*"
+	xmlns:componentes="br.com.bancoob.componentes.*"
+	xmlns:navegacao="br.com.bancoob.componentes.navegacao.*"
+	xmlns:selecaogeral="br.com.sicoob.sisbr.cnv.util.selecaogeral.*"
+	xmlns:campos="br.com.bancoob.componentes.campos.*"
+	xmlns:botao="br.com.bancoob.componentes.painellista.*"
+	xmlns:tabelaPaginada="br.com.bancoob.componentes.tabelapaginada.*"
+	xmlns:grid="br.com.bancoob.componentes.grid.*"
+	xmlns:mx="http://www.adobe.com/2006/mxml" width="1260" height="400" 
+	backgroundAlpha="0.0" backgroundColor="#FFFFFF" 
+	clipContent="false" horizontalScrollPolicy="auto" verticalScrollPolicy="auto" xmlns:local="*" xmlns:renderer="br.com.sicoob.sisbr.cnv.gestao.renderer.*" >
+	<mx:Script>
+		<![CDATA[	
+			[Bindable]
+			[Embed(source="br/com/bancoob/imagens/icos/skip forward.png")]
+			public var Mostrar:Class;
+			
+			[Bindable]
+			[Embed(source="br/com/bancoob/imagens/icos/fast forward.png")]
+			public var Recolher:Class;
+		]]>
+	</mx:Script>
+	<containers:VBoxBancoob y="10" x="10" width="100%" height="100%" >
+
+		<containers:HBoxBancoob width="100%" id="hdGrid">
+			<tabelaPaginada:TabelaPaginadaMemoria id="grdResultado" x="2" y="4" width="99%" height="350"
+												  exibirScrollHorizontal="true" tabIndex="5"
+												  tamanhoPagina="13" titulo="Relatório">
+				<tabelaPaginada:MetadadosTabela>
+					<grid:ColunaGrid dataField="situacao"
+									 id="situacao"
+									 headerText="Situação" 
+									 width="60"
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="dataRescisaoFormatada"
+									 id="dtRescisaoFrmtd"
+									 headerText="Encerramento" 
+									 width="70"
+									 textAlign="center"/>
+					<grid:ColunaGrid dataField="numero" 
+									 id="numero"
+									 headerText="Contrato" 
+									 width="145"
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="cnpj"
+									 id="cnpj"
+									 headerText="CNPJ" 
+									 width="110"
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="sigla"
+									 id="sigla"
+									 headerText="Sigla" 
+									 width="145" 
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="dataAssinaturaContratoFormatada"
+									 id="dtAssContratoFrmtd"
+									 headerText="Assinatura"
+									 width="70" 
+									 textAlign="center"/>
+					<grid:ColunaGrid dataField="dataVigenciaFormatada" 
+									 id="dtVigenciaFrmtd"
+									 headerText="Vigência" 
+									 width="70"
+									 textAlign="center"/>
+					<grid:ColunaGrid dataField="dataRenovacaoFormatada"
+									 id="dtRenovacaoFrmtd"
+									 headerText="Renovação" 
+									 width="70"
+									 textAlign="center"/>
+					<grid:ColunaGrid dataField="descSituacaoRenovacao" 
+									 id="descSitRenovacao"
+									 headerText="Sit. Renovação" 
+									 width="115"
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="alertaRenovacaoDias"
+									 id="alertaRenovacao"
+									 headerText="Alerta Renovação" 
+									 width="100"
+									 textAlign="center"/>
+					<grid:ColunaGrid dataField="dataAtualizacaoTarifarioFormatada" 
+									 id="dtAtualTarifarioFrmtd"
+									 headerText="Tarifária" 
+									 width="70"
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="descSituacaoTarifaria" 
+									 id="descSitTarifaria"
+									 headerText="Sit. Tarifária" 
+									 width="112"
+									 textAlign="left"/>
+					<grid:ColunaGrid dataField="alertaTarifariaDias"
+									 id="alrtTarifariaDias"
+									 headerText="Alerta Tarifária" 
+									 width="90"
+									 textAlign="center"/>
+					<grid:ColunaGrid dataField="acaoOperacionalRenovacao"
+									 id="acaoOpRenovacao"
+									 headerText="Ação Operacional" 
+									 width="50"
+									 textAlign="center"/>
+					<grid:ColunaGrid dataField="acaoOperacionalTarifaria"
+									 id="acaoOpTarifaria"
+									 headerText="Ação Operacional" 
+									 width="50"									 
+									 textAlign="center"/>
+				</tabelaPaginada:MetadadosTabela>
+			</tabelaPaginada:TabelaPaginadaMemoria>
+		</containers:HBoxBancoob>
+	
+	</containers:VBoxBancoob>
+	<containers:HBoxBancoob bottom="5" right="10">
+		<componentes:Botao id="btImprimir" label="Imprimir" enabled="false"/>
+		<componentes:Botao id="btFechar" label="Fechar" click="fecharJanela();"/>
+	</containers:HBoxBancoob>
+	
+	<!-- INICIO - TELA DO FILTRO -->
+	<containers:HBoxBancoob y="5" right="8">
+		<componentes:Botao  id="btnFiltros" width="25" toolTip="Filtros de Pesquisa" cornerRadius="0" icon="{Mostrar}"/>
+		<mx:Panel id="pnMenu" headerColors="{['#FFFFFF','#FFFFFF']}" borderColor="#FFFFFF" 
+				  borderAlpha="1.0" horizontalScrollPolicy="off" shadowDirection="left"
+				  cornerRadius="0" width="0" height="280" paddingLeft="10" title="PESQUISAR">
+			<containers:VBoxBancoob width="99%" paddingTop="10">
+				<titulo:SubtituloView id="subtituloPainelFiltro" width="97%" height="20" texto="Filtros" />
+					
+				<containers:HBoxBancoob width="100%" paddingLeft="20" paddingTop="5" verticalAlign="bottom">
+					<input:RadioGrupoBancoob id="tipoRelatorio"/>
+					<containers:VBoxBancoob width="99%">
+						<input:Radio id="rVencidos" label="Vencidos" group="{tipoRelatorio}"/>
+						<input:Radio id="rVigente" label="Vigente" group="{tipoRelatorio}"/>
+						<input:Radio id="rEncerrados" label="Encerrados" group="{tipoRelatorio}"/>
+					</containers:VBoxBancoob>
+					<containers:VBoxBancoob width="99%">
+						<input:Radio id="rRenovacao" label="Renovação" group="{tipoRelatorio}"/>
+						<input:Radio id="rTarifaria" label="Atualização Tarifária" group="{tipoRelatorio}"/>
+						<input:Radio id="rTodos" label="Todos" group="{tipoRelatorio}" selected="true"/>
+					</containers:VBoxBancoob>
+				</containers:HBoxBancoob>
+
+				<titulo:SubtituloView id="subtituloPeriodo" width="97%" height="20" texto="Periodo" visible="false"/>
+				
+				<containers:HBoxBancoob  id="periodoContainer" width="100%" paddingLeft="20" paddingTop="5" verticalAlign="bottom" visible="false">
+					<componentes:Rotulo text="Data Inicial: "/>
+					<input:Data id="dataInicio" dataDefault="{null}" validarMensagem="Informe a data de início" validarObrigatorio="true" width="28%"/>
+					<componentes:Rotulo text=" Data Final: "/>
+					<input:Data id="dataFim" dataDefault="{null}" validarMensagem="Informe a data fim" validarObrigatorio="true" width="28%"/>
+				</containers:HBoxBancoob>
+				
+				<containers:HBoxBancoob id="containerLinha" width="99%" paddingTop="7">
+					<titulo:LinhaView  right="0" left="0" width="100%"/>
+				</containers:HBoxBancoob>
+				
+				<containers:HBoxBancoob width="95%" height="30" horizontalAlign="center" paddingTop="5">
+					<componentes:Botao  id="btnLimpar" label="LIMPAR" toolTip="Limpar."/>
+					<componentes:Botao  id="btnPesquisar" label="Pesquisar"/> 
+				</containers:HBoxBancoob>
+				
+			</containers:VBoxBancoob>
+		</mx:Panel>
+	</containers:HBoxBancoob>	
+	<!-- FIM - TELA DO FILTRO -->
+	
+</componentes:Modulo>

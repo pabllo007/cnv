@@ -1,0 +1,12 @@
+**/.settings
+**/.vscode
+**/.project
+**/.classpath
+**/.factorypath
+**/.flexProperties
+**/.action*
+**/target
+**/*.swp
+**/bin-debug
+**/teste.ebcdic
+**/.tern-project

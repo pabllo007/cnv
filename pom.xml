@@ -1,0 +1,370 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>CNV - Gestao</name>
+
+	<groupId>br.com.sicoob.cnv</groupId>
+	<artifactId>gestao</artifactId>
+	<version>1.0.0.27-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>br.com.sicoob.framework.pom</groupId>
+		<artifactId>super-pom</artifactId>
+		<version>3.0</version>
+	</parent>
+
+	<scm>
+		<connection>scm:git:http://git.sicoob.com.br/gesin1/cnv-arrecadacao-open.git</connection>
+		<developerConnection>scm:git:http://git.sicoob.com.br/gesin1/cnv-arrecadacao-open.git</developerConnection>
+		<url>http://git.sicoob.com.br/gesin1/cnv-arrecadacao-open.git</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<modules>
+		<module>ear</module>
+		<module>war</module>
+		<module>ejb</module>
+		<module>flex</module>
+		<module>relatorio</module>
+	</modules>
+
+	<properties>
+		<versao.maven-war-plugin>3.1.0</versao.maven-war-plugin>
+		<versao.maven-ejb-plugin>2.5.1</versao.maven-ejb-plugin>
+		<versao.maven-ear-plugin>2.8</versao.maven-ear-plugin>
+		<versao.exec-maven-plugin>1.4.0</versao.exec-maven-plugin>
+
+		<javaee-api.version>7.0</javaee-api.version>
+
+		<sicoob-java.version>1.0.14.7</sicoob-java.version>
+		<sicoob-was9.version>1.0.15.0</sicoob-was9.version>
+		<sicoob-rest.version>1.2.1.1</sicoob-rest.version>
+
+		<!-- Integracao -->
+		<capes-api.version>2.0.0.17</capes-api.version>
+		<!-- FIM -->
+
+		<io-swagger.version>1.5.4</io-swagger.version>
+		<dozer.version>5.4.0</dozer.version>
+
+		<versao-jackson-jaxrs-json>2.1.4</versao-jackson-jaxrs-json>
+
+		<hibernate.version>3.2.6</hibernate.version>
+		<hibernate-core.version>5.2.10.Final</hibernate-core.version>
+		<hibernate-annotations.version>3.2.1</hibernate-annotations.version>
+
+		<commons-beanutils.version>1.9.2</commons-beanutils.version>
+		<commons-collections.version>3.2.2</commons-collections.version>
+		<commons-jelly.version>1.0</commons-jelly.version>
+		<commons-logging.version>1.2</commons-logging.version>
+		<commons-io.version>2.5</commons-io.version>
+		<commons-lang.version>2.6</commons-lang.version>
+		<commons-jexl.version>1.1</commons-jexl.version>
+
+		<!-- Unit Tests -->
+		<junit.version>4.12</junit.version>
+
+		<powermock-core.version>1.6.4</powermock-core.version>
+		<powermock-api-mockito.version>1.6.4</powermock-api-mockito.version>
+		<powermock-module-junit4.version>1.6.4</powermock-module-junit4.version>
+		<powermock-module-junit4-common.version>1.6.4</powermock-module-junit4-common.version>
+		<powermock-api-support.version>1.6.4</powermock-api-support.version>
+		<powermock-reflect.version>1.6.4</powermock-reflect.version>
+
+		<mockito-all.version>1.10.19</mockito-all.version>
+		<mockito.version>1.8.5</mockito.version>
+		<!-- End Unit Tests -->
+
+		<!-- CNV Framework -->
+		<cnv.frame.persistencia.version>1.0.4.0</cnv.frame.persistencia.version>
+
+		<joda-time.version>2.9.4</joda-time.version>
+		<log4j.version>1.2.14</log4j.version>
+
+		<relatorio-api.version>2.2.0.15</relatorio-api.version>
+		<relatorio-flex.version>2.2.0.15</relatorio-flex.version>
+
+		<prt-base-sisbr-java.version>1.0.2.1</prt-base-sisbr-java.version>
+		<prt-arquivos-web.version>1.0.2.1</prt-arquivos-web.version>
+
+		<!-- Dependencias FLEX -->
+		<cnv-utilitarios.version>1.0.2.31</cnv-utilitarios.version>
+		<versao-prt-base-componentes-flex>1.0.8.57</versao-prt-base-componentes-flex>
+		<versao-prt-base-constantes-flex>1.0.8.57</versao-prt-base-constantes-flex>
+		<versao-prt-base-sisbr-flex>1.0.8.57</versao-prt-base-sisbr-flex>
+		<versao-prt-base-sisbr-assets-flex>1.0.8.57</versao-prt-base-sisbr-assets-flex>
+		<versao-prt-base-sicoob-flex>1.0.8.57</versao-prt-base-sicoob-flex>
+		<versao-prt-base-sisbr-flex-air>1.0.8.57</versao-prt-base-sisbr-flex-air>
+		<versao-datavisualization>${versao.sdk.flex}</versao-datavisualization>
+		<versao-flex-framework>${versao.sdk.flex}</versao-flex-framework>
+		<versao-playerglobal>${versao.sdk.flex}</versao-playerglobal>
+		<versao-granite-gravity-swc>1.1.0</versao-granite-gravity-swc>
+		<versao-granite-hibernate-swc>1.1.0</versao-granite-hibernate-swc>
+		<versao-granite-swc>1.1.0</versao-granite-swc>
+		<!-- FIM Dependencias FLEX -->
+
+	</properties>
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${versao.source.java}</source>
+					<target>${versao.target.java}</target>
+					<encoding>ISO-8859-1</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<source>${versao.source.java}</source>
+					<target>${versao.target.java}</target>
+					<encoding>ISO-8859-1</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<additionalparam>-Xdoclint:none</additionalparam>
+					<source>${versao.source.java}</source>
+					<target>${versao.target.java}</target>
+					<encoding>ISO-8859-1</encoding>
+				</configuration>
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ejb-plugin</artifactId>
+				<version>${versao.maven-ejb-plugin}</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<useUniqueVersions>false</useUniqueVersions>
+						</manifest>
+					</archive>
+					<clientExcludes>
+						<!-- no operation -->
+						<clientExclude>NOP</clientExclude>
+					</clientExcludes>
+					<clientIncludes>
+						<clientInclude>**/*</clientInclude>
+					</clientIncludes>
+					<generateClient>true</generateClient>
+					<ejbVersion>3.2</ejbVersion>
+				</configuration>
+			</plugin>
+		</plugins>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- <dependency>
+				<groupId>br.com.sicoob.sisbr.cnvrenovacao</groupId>
+				<artifactId>cnv-utilitarios-lib</artifactId>
+				<version>${cnv-utilitarios.version}</version>
+				<scope>compile</scope>
+			</dependency> -->
+
+			<dependency>
+				<groupId>br.com.sicoob.framework</groupId>
+				<artifactId>sicoob-java</artifactId>
+				<version>${sicoob-java.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>br.com.sicoob.framework</groupId>
+				<artifactId>sicoob-was9</artifactId>
+				<version>${sicoob-was9.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>br.com.sicoob.framework</groupId>
+				<artifactId>sicoob-rest</artifactId>
+				<version>${sicoob-rest.version}</version>
+				<scope>compile</scope>
+			</dependency>
+
+			<!-- Module EJB -->
+
+			<dependency>
+				<groupId>javax.ejb</groupId>
+				<artifactId>javax.ejb-api</artifactId>
+				<version>3.2</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- Commons -->
+			<dependency>
+				<groupId>commons-collections</groupId>
+				<artifactId>commons-collections</artifactId>
+				<version>${commons-collections.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>${commons-lang.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>net.sf.dozer</groupId>
+				<artifactId>dozer</artifactId>
+				<version>${dozer.version}</version>
+				<scope>compile</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-annotations</artifactId>
+				<version>2.4.5</version>
+			</dependency>
+
+			<!-- INTEGRACAO -->
+
+			<dependency>
+				<groupId>br.com.sicoob.capes</groupId>
+				<artifactId>capes-api</artifactId>
+				<version>${capes-api.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>br.com.sicoob.capes</groupId>
+						<artifactId>capes-modulo-comum</artifactId>
+					</exclusion>
+				</exclusions>
+				<scope>compile</scope>
+			</dependency>
+
+
+			<!-- Unit test -->
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.jaxrs</groupId>
+				<artifactId>jackson-jaxrs-json-provider</artifactId>
+				<version>${versao-jackson-jaxrs-json}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.powermock</groupId>
+				<artifactId>powermock-core</artifactId>
+				<version>${powermock-core.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.powermock</groupId>
+				<artifactId>powermock-api-mockito</artifactId>
+				<version>${powermock-api-mockito.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.powermock</groupId>
+				<artifactId>powermock-module-junit4</artifactId>
+				<version>${powermock-module-junit4.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.powermock</groupId>
+				<artifactId>powermock-module-junit4-common</artifactId>
+				<version>${powermock-module-junit4-common.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.powermock</groupId>
+				<artifactId>powermock-api-support</artifactId>
+				<version>${powermock-api-support.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.powermock</groupId>
+				<artifactId>powermock-reflect</artifactId>
+				<version>${powermock-reflect.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>1.2.17</version>
+				<scope>test</scope>
+			</dependency>
+
+			<!-- Outros -->
+
+			<dependency>
+				<groupId>org.json</groupId>
+				<artifactId>json</artifactId>
+				<version>20180813</version>
+				<scope>compile</scope>
+			</dependency>
+
+			<!-- CNV Framework -->
+
+			<dependency>
+				<groupId>br.com.sicoob.cnv.framework</groupId>
+				<artifactId>cnv-framework-persistencia</artifactId>
+				<version>${cnv.frame.persistencia.version}</version>
+				<scope>compile</scope>
+			</dependency>
+			
+			<dependency>
+				<groupId>br.com.sicoob.sisbr.cnvrenovacao</groupId>
+				<artifactId>cnv-sci-api-ejb</artifactId>
+				<version>1.0.2.64</version>
+			</dependency>
+
+			<dependency>
+				<groupId>br.com.sicoob.cnv.framework</groupId>
+				<artifactId>cnv-framework-rest</artifactId>
+				<version>${cnv.frame.persistencia.version}</version>
+				<scope>compile</scope>
+			</dependency>
+
+		</dependencies>
+
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>${javaee-api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+
+</project>

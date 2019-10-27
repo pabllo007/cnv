@@ -1,0 +1,321 @@
+swagger: '2.0'
+host: localhost
+basePath: /convenios/arrecadacoes/api
+info:
+  title: Convênios Sicoob
+  description:
+    A API disponibiliza serviços referentes a convênios firmados
+    entre orgão públicos e privados e esta instituição financeira.
+  version: 1.0.1
+schemes:
+  - https
+tags:
+  - name: Arrecadações
+    description: Serviços para gestão das arrecadações.
+paths:
+  /codigo-barras/{codigo-barras}:
+    get:
+      tags:
+        - Arrecadações
+      summary: Serviço para consulta de código de barras.
+      description: 
+        Este recurso retorna os dados do código de barras solicitado.
+      parameters:
+        - in: path
+          name: codigo-barras
+          type: string
+          description: Número do código de barras (sem dígito verificador).
+          required: true
+        - in: query
+          name: dataPagamento
+          type: string
+          format: date
+          description: Data de pagamento do boleto. Formato RFC 3339, seção 5.6.
+          required: false
+        - in: query
+          name: transacao
+          type: number
+          description: Código identificador da transação do cliente.
+          required: true
+      responses:
+        '200':
+          description: Consulta realizada com sucesso.
+          schema:
+            type: object
+            properties:
+              resultado:
+                type: object
+                properties:
+                  nsu: 
+                    type: integer
+                    format: int32
+                    description: Retorna o código que identifica a transação de forma única.
+                    example: 183390172928
+                  convenio:
+                    type: string
+                    description: Retorna o identificador do convênio.
+                    example: 1
+                  siglaConvenio:
+                    type: string
+                    description: Retorna a sigla do convênio.
+                    example: 'SiG'
+                  valorDocumento:
+                    type: number
+                    format: double
+                    description: Informa o valor do documento para arrecadação.
+                    example: 1171.23
+                  valorDesconto:
+                    type: number
+                    format: double
+                    description: Informa o valor de desconto para arrecadação.
+                    example: 1171.23
+                  valorMulta:
+                    type: number
+                    format: double
+                    description: Informa o valor multa para arrecadação.
+                    example: 1171.23
+                  valorJuros:
+                    type: number
+                    format: double
+                    description: Informa o valor do juros para arrecadação.
+                    example: 1171.23
+                  valorOutrosEncargos:
+                    type: number
+                    format: double
+                    description: Informa o valor de outros encargos para arrecadação.
+                    example: 1171.23
+                  valorTotal:
+                    type: number
+                    format: double
+                    description: Informa o valor total para arrecadação.
+                    example: 1171.23
+                  fgts:
+                    type: boolean
+                    description: Retorna Identificador FGTS
+                    example: false
+        '400':
+          description: Erro de negócio
+          schema:
+            $ref: '#/definitions/MensagensErro'
+        '500':
+          description: Erro interno
+          schema:
+            $ref: '#/definitions/MensagensErro'
+  /codigo-barras/{codigo-barras}/pagamento:
+    post:
+      tags:
+        - Arrecadações
+      summary: Serviço para arrecadações de pagáveis via codigo de barras.
+      description: 
+        Serviço para pagamento de código de barras de convênios.
+      parameters:
+        - in: path
+          name: codigo-barras
+          type: string
+          description: Número do código de barras (sem dígito verificador)
+          required: true
+        - in: body
+          name: body
+          description: Requisição de pagamento.
+          required: true
+          schema:
+            type: object
+            properties:
+              pagamento:
+                $ref: '#/definitions/Pagamento'
+              transacao:
+                type: number
+                description: Código identificador da transação do cliente.
+                example: 123456789
+            required:
+              - pagamento
+              - transacao
+      responses:
+        '200':
+          description: Pagamento realizado com sucesso.
+          schema:
+            type: object
+            properties:
+              resultado:
+                type: object
+                properties:
+                  comprovate:
+                    type: string
+                    format: byte
+                    description: Dados do comprovante. Formato RFC 4648, seção 4.
+                    example: "PCFbQ0RBVEFbICBEYWRvcyBkbyBjb21wcm92YW50ZSAJCiAgXV0+"
+                  arrecadacao:
+                    $ref: '#/definitions/Pagamento'
+        '400':
+          description: Erro de negócio
+          schema:
+            $ref: '#/definitions/MensagensErro'
+        '500':
+          description: Erro interno
+          schema:
+            $ref: '#/definitions/MensagensErro'
+  /pagamento/{nsu}/estorno:
+    patch:
+      tags:
+        - Arrecadações
+      summary: Serviço de estorno de pagamento.
+      description: 
+        Serviço de estorno de pagamento.
+      parameters:
+        - in: path
+          name: nsu
+          type: string
+          description: Código que identifica a transação de pagamento realizado.
+          required: true
+        - in: body
+          name: body
+          description: Requisição de estorno.
+          required: true
+          schema:
+            type: object
+            properties:
+              transacao:
+                type: number
+                description: Código identificador da transação do cliente.
+                example: 123456789
+            required:
+              - transacao
+      responses:
+        '200':
+          description: Estorno realizado com sucesso.
+          schema:
+            type: object
+            properties:
+              resultado:
+                type: object
+                properties:
+                  comprovate:
+                    type: string
+                    format: byte
+                    description: Dados do comprovante. Formato RFC 4648, seção 4.
+                    example: "PCFbQ0RBVEFbICBEYWRvcyBkbyBjb21wcm92YW50ZSAJCiAgXV0+"
+                  pagamento:
+                    $ref: '#/definitions/Pagamento'
+        '400':
+          description: Erro de negócio
+          schema:
+            $ref: '#/definitions/MensagensErro'
+        '500':
+          description: Erro interno
+          schema:
+            $ref: '#/definitions/MensagensErro'
+  /pagamento/{nsu}/comprovante:
+    get:
+      tags:
+        - Arrecadações
+      summary: Serviço de consulta de segunda via de pagamento.
+      description: 
+        Serviço de consulta de segunda via de pagamento.
+      parameters:
+        - in: path
+          name: nsu
+          type: string
+          description: Código que identifica a transação de pagamento realizado.
+          required: true
+        - in: query
+          name: transacao
+          type: number
+          description: Código identificador da transação do cliente.
+          required: true
+      responses:
+        '200':
+          description: Retorno da segunda via do comprovante de pagamento.
+          schema:
+            type: object
+            properties:
+              resultado:
+                type: object
+                properties:
+                  comprovate:
+                    type: string
+                    format: byte
+                    description: Dados do comprovante. Formato RFC 4648, seção 4.
+                    example: "PCFbQ0RBVEFbICBEYWRvcyBkbyBjb21wcm92YW50ZSAJCiAgXV0+"
+                  pagamento:
+                    $ref: '#/definitions/Pagamento'
+        '400':
+          description: Erro de negócio
+          schema:
+            $ref: '#/definitions/MensagensErro'
+        '500':
+          description: Erro interno
+          schema:
+            $ref: '#/definitions/MensagensErro'
+definitions:
+  Pagamento:
+    type: object
+    properties:
+      valorPago:
+        type: number
+        format: double
+        description: Valor pago para arrecadação.
+        example: 1171.23
+      nsu:
+        type: integer
+        format: int32
+        description: Código que identifica a transação de forma única.
+        example: 183390172928
+      dataPagamento:
+        type: string
+        format: date
+        description: Data de pagamento do boleto. Formato RFC 3339, seção 5.6.
+      valorDocumento:
+        type: number
+        format: double
+        description: Valor do documento para arrecadação.
+        example: 1171.23
+      valorDesconto:
+        type: number
+        format: double
+        description: Valor do desconto para arrecadação.
+        example: 11.23
+      valorJuros:
+        type: number
+        format: double
+        description: Valor do juros para arrecadação.
+        example: 1.71
+      valorMulta:
+        type: number
+        format: double
+        description: Valor da multa para arrecadação.
+        example: 17.23
+      identificadorFgts:
+        type: string
+        description: Informa o identificador do convênico FGTS.
+        example: "ACHGY123100JJ1"
+      anoExercicio: 
+        type: number
+        description: Informa o ano exercício do pagamento.
+        example: 2019
+    required:
+      - valorPago
+      - nsu
+      - dataPagamento
+      - valorDocumento
+  MensagensErro:
+    type: object
+    properties:
+      mensagens:
+        type: array
+        items:
+          $ref: '#/definitions/SicoobMensagem'
+        description: Array com todas as mensagem de erro.
+    required:
+      - mensagens
+  SicoobMensagem:
+    type: object
+    properties:
+      mensagem:
+        type: string
+        description: Mensagem de retorno que pode ser informativa ou de erro
+      codigo:
+        type: string
+        description: Código padrão de erro
+    required:
+      - mensagem
+      - codigo

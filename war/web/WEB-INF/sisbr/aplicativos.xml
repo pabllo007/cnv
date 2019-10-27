@@ -1,0 +1,10 @@
+<?xml	version="1.0"?>
+<sisbrweb>
+	<aplicativo id="MDICONTRATO" visivel="1" ativo="1">
+       <nome>CONVÊNIOS</nome>
+       <icone>br/com/bancoob/imagens/icos/ListaAplicativos/convenios_</icone>
+       <descricao>SICOOB - CONVÊNIOS</descricao>
+		<destino>servicosJavaGestaoConvenios</destino>
+		<destinoArquivos>destinoArquivosGestaoConvenios</destinoArquivos>
+    </aplicativo>
+</sisbrweb>
